@@ -8,13 +8,13 @@
 </head>
 <body>
 
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default" style="background-color: #ffde7b; font-color:black">
   <div class="container-fluid">
     <div class="navbar-header">
 
     </div>
     <ul class="nav navbar-nav">
-      <li style="font-color:black;"><a href="{{ route('welcome') }}">Home</a></li>
+      <li style="font-color:black;"><a href="{{ route('welcome') }}" >Home</a></li>
       <li><a href="{{ route('payment.index') }}">Payment</a></li>
       <li><a href="{{ route('faq') }}">FaQ</a></li>
     </ul>

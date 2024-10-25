@@ -7,8 +7,25 @@
 <!-- Bootstrap JS -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
+<style>
+    body {
+        background-color: #fff3cf;
+    }
+    .welcome-container {
+    display: flex;
+    align-items: center;
+}
+.welcome-container img {
+    height: 100px;
+    margin-right: 20px; /* Space between logo and text */
+}
+</style>
 <div class="container">
     <br>
+    <div class="welcome-container">
+        <img src="{{ asset('images/epayment logo.png') }}" alt="Logo">
+        <h1 class="mb-0">Welcome to the Volare E-Payment</h1>
+    </div>
     {{-- <h4>Welcome, {{ Auth::user()->name }}!</h4> Welcome the collector --}}
 
     <form action="{{ route('auth.logout') }}" method="POST" style="display: inline;">
@@ -158,7 +175,17 @@
                     </div>
                     <div class="form-group">
                         <label for="debtorStatus">Status</label>
-                        <input type="text" name="status" id="debtorStatus" class="form-control" required>
+                        <select name="status" id="debtorStatus" class="form-control" required>
+                            <option value="">Select a status</option>
+                            <option value="new">new</option>
+                            <option value="active">active</option>
+                            <option value="pending">pending</option>
+                            <option value="in review">In Review</option>
+                            <option value="approved">Approved</option>
+                            <option value="rejected">rejected</option>
+                            <option value="In Process">In Process</option>
+                            <option value="settled">Settled</option>
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -171,6 +198,7 @@
 </div>
 
 
+<!-- Edit Modal -->
 <!-- Edit Modal -->
 <div class="modal fade" id="editDebtorModal" tabindex="-1" role="dialog" aria-labelledby="editDebtorModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -207,7 +235,7 @@
                         <input type="number" name="loan_amount" id="editDebtorLoanAmount" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label for="editdebtorLoanType">Loan Type</label>
+                        <label for="editLoanType">Loan Type</label>
                         <select name="loan_type" id="editLoanType" class="form-control" required>
                             <option value="">Select a loan type</option>
                             <option value="Personal Loan">Personal Loan</option>
@@ -238,14 +266,24 @@
                     <div class="form-group">
                         <label for="editDebtorGender">Gender</label>
                         <select name="gender" id="editDebtorGender" class="form-control" required>
-                            <option value="">Select Gender</ option>
+                            <option value="">Select Gender</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="editDebtorStatus">Status</label>
-                        <input type="text" name="status" id="editDebtorStatus" class="form-control" required>
+                        <select name="status" id="editDebtorStatus" class="form-control" required>
+                            <option value="">Select a status</option>
+                            <option value="new">new</option>
+                            <option value="active">active</option>
+                            <option value="pending">pending</option>
+                            <option value="in review">In Review</option>
+                            <option value="approved">Approved</option>
+                            <option value="rejected">rejected</option>
+                            <option value="In Process">In Process</option>
+                            <option value="settled">Settled</option>
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -261,32 +299,32 @@
 <script>
 // Edit Debtor Function: Populates modal with current debtor info
 function editDebtor(debtorId) {
-        $.ajax({
-            url: `/debtor/${debtorId}/edit`, // Route to fetch debtor details
-            type: 'GET',
-            success: function(data) {
-                // Populate the form fields with the debtor data
-                $('#debtorId').val(data.id);
-                $('#editDebtorNoIC').val(data.no_ic);
-                $('#editDebtorName').val(data.name);
-                $('#editDebtorAddress').val(data.address);
-                $('#editDebtorPhoneNumber').val(data.phone_number);
-                $('#editdebtorLoanType').val(data.loan_type);
-                $('#editDebtorLoanAmount').val(data.loan_amount);
-                $('#editDebtorloanDateStart').val(data.loan_date_start);
-                $('#editDebtorloanDateEnd').val(data.loan_date_end);
-                $('#editDebtorDuration').val(data.duration);
-                $('#editDebtorTotalAmount').val(data.total_amount);
-                $('#editDebtorGender').val(data.gender);
-                $('#editDebtorStatus').val(data.status);
-                // Show the modal
-                $('#editDebtorModal').modal('show');
-            },
-            error: function(err) {
-                console.log('Error fetching debtor data:', err);
-            }
-        });
-    }
+    $.ajax({
+        url: `/debtor/${debtorId}/edit`, // Route to fetch debtor details
+        type: 'GET',
+        success: function(data) {
+            // Populate the form fields with the debtor data
+            $('#debtorId').val(data.id);
+            $('#editDebtorNoIC').val(data.no_ic);
+            $('#editDebtorName').val(data.name);
+            $('#editDebtorAddress').val(data.address);
+            $('#editDebtorPhoneNumber').val(data.phone_number);
+            $('#editLoanType').val(data.loan_type); // Set the selected loan type
+            $('#editDebtorLoanAmount').val(data.loan_amount);
+            $('#editDebtorloanDateStart').val(data.loan_date_start);
+            $('#editDebtorloanDateEnd').val(data.loan_date_end);
+            $('#editDebtorDuration').val(data.duration);
+            $('#editDebtorTotalAmount').val(data.total_amount);
+            $('#editDebtorGender').val(data.gender); // Set the selected gender
+            $('#editDebtorStatus').val(data.status); // Set the selected status
+            // Show the modal
+            $('#editDebtorModal').modal('show');
+        },
+        error: function(err) {
+            console.log('Error fetching debtor data:', err);
+        }
+    });
+}
 
     // AJAX request to update debtor information
     $('#editDebtorForm').submit(function(e) {

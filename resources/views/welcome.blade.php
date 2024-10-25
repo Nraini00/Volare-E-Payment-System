@@ -20,10 +20,13 @@
     height: 100px;
     margin-right: 20px; /* Space between logo and text */
 }
+body {
+        background-color: #fff3cf;
+    }
 
     </style>
 </head>
-<body>
+<body background="#fff3cf">
     <!-- Include the navbar -->
     @include('navbar.menu')
 
